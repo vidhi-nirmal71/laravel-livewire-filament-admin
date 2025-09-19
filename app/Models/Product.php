@@ -17,4 +17,11 @@ class Product extends Model
         'is_active',
         'image'
     ];
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image 
+            ? asset('storage/' . $this->image) 
+            : null;
+    }
+
 }

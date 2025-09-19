@@ -29,8 +29,12 @@ class ProductForm
                     ->default(0),
                 Toggle::make('is_active')
                     ->required(),
-                FileUpload::make('image')
-                    ->image(),
+               FileUpload::make('image')
+                ->image()
+                ->directory('images')
+                ->disk('public')
+                ->preserveFilenames()
+
             ]);
     }
 }
