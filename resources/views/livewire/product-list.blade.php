@@ -4,7 +4,7 @@
     <div class="product-grid">
         @forelse ($products as $product)
             <div class="product-card">
-                <img src="{{ asset('storage/images/' . $product->image) }}" alt="{{ $product->name }}">
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                 <div class="product-info">
                     <h3>{{ $product->name }}</h3>
                     <p class="desc">{{ $product->description }}</p>
