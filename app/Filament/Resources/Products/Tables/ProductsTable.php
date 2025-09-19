@@ -26,7 +26,8 @@ class ProductsTable
                     ->sortable(),
                 IconColumn::make('is_active')
                     ->boolean(),
-                ImageColumn::make('image'),
+               ImageColumn::make('image_url')
+                    ->label('Image'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
