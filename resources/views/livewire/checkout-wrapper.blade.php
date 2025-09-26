@@ -35,12 +35,6 @@
                 Livewire.dispatch('placeOrder');
             }
         });
-
-        // Optional: Listen to Livewire event to refresh card element if needed
-        // Livewire.on('refreshStripe', () => {
-        //     card.unmount();
-        //     card.mount('#card-element');
-        // });
     });
 </script>
 

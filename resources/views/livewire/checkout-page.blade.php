@@ -3,72 +3,70 @@
 
     @if(count($cartItems) > 0)
         <div class="row">
-            <!-- Shipping / Billing Form -->
             <div class="col-12 col-lg-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Shipping Information</h5>
 
-                        <div class="mb-3">
-                            <label>Name</label>
-                            <input type="text" class="form-control" wire:model.defer="name">
-                            @error('name') <span class="text-danger">{{ $message }}</span>@enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input type="email" class="form-control" wire:model.defer="email">
-                            @error('email') <span class="text-danger">{{ $message }}</span>@enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" wire:model.defer="phone">
-                            @error('phone') <span class="text-danger">{{ $message }}</span>@enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Address</label>
-                            <textarea class="form-control" wire:model.defer="address"></textarea>
-                            @error('address') <span class="text-danger">{{ $message }}</span>@enderror
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6 mb-3">
-                                <label>City</label>
-                                <input type="text" class="form-control" wire:model.defer="city">
-                                @error('city') <span class="text-danger">{{ $message }}</span>@enderror
+                        <form wire:submit.prevent="placeOrder">
+                            <div class="mb-3">
+                                <label>Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.debounce.500ms="name" placeholder="Enter your name">
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="col-6 mb-3">
-                                <label>State</label>
-                                <input type="text" class="form-control" wire:model.defer="state">
-                                @error('state') <span class="text-danger">{{ $message }}</span>@enderror
+
+                            <div class="mb-3">
+                                <label>Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.debounce.500ms="email" placeholder="Enter your email">
+                                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label>ZIP Code</label>
-                            <input type="text" class="form-control" wire:model.defer="zip">
-                            @error('zip') <span class="text-danger">{{ $message }}</span>@enderror
-                        </div>
+                            <div class="mb-3">
+                                <label>Phone</label>
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror" wire:model.debounce.500ms="phone" placeholder="Enter phone number">
+                                @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
 
-                        <!-- Stripe Card Input -->
-                        <div class="mb-4">
-                            <label class="form-label">Card Details</label>
-                            <div id="card-element" class="form-control" wire:ignore></div>
-                            <div id="card-errors" class="text-danger mt-2"></div>
-                        </div>
+                            <div class="mb-3">
+                                <label>Address</label>
+                                <textarea class="form-control @error('address') is-invalid @enderror" wire:model.debounce.500ms="address" placeholder="Enter your address"></textarea>
+                                @error('address') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>City</label>
+                                    <input type="text" class="form-control @error('city') is-invalid @enderror" wire:model.debounce.500ms="city" placeholder="City">
+                                    @error('city') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label>State</label>
+                                    <input type="text" class="form-control @error('state') is-invalid @enderror" wire:model.debounce.500ms="state" placeholder="State">
+                                    @error('state') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>ZIP Code</label>
+                                <input type="text" class="form-control @error('zip') is-invalid @enderror" wire:model.debounce.500ms="zip" placeholder="ZIP Code">
+                                @error('zip') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Card Details</label>
+                                <div id="card-element" class="form-control" wire:ignore></div>
+                                <div id="card-errors" class="text-danger mt-2"></div>
+                            </div>
                         
-                        <button id="card-button"
-                            class="btn btn-primary w-100"
-                            data-secret="{{ $paymentIntentSecret }}">
-                            Pay ₹{{ number_format($grandTotal, 2) }}
-                        </button>
+                            <button id="card-button" type="button" class="btn btn-primary w-100" data-secret="{{ $paymentIntentSecret }}">
+                                Pay ₹{{ number_format($grandTotal, 2) }}
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             </div>
 
-            <!-- Order Summary -->
             <div class="col-12 col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-body">

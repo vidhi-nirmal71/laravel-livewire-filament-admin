@@ -16,7 +16,41 @@ class CheckoutPage extends Component
     public $name, $email, $phone, $address, $city, $state, $zip;
     public $grandTotal = 0;
     public $paymentIntentSecret;
-    protected $listeners = ['placeOrder'];
+    protected $listeners = ['placeOrder', 'validateForm'];
+
+    protected $rules = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email',
+        'phone' => 'required|numeric|digits_between:7,15',
+        'address' => 'required|string|max:500',
+        'city' => 'required|string|max:100',
+        'state' => 'required|string|max:100',
+        'zip' => 'required|string|max:10',
+    ];
+
+    protected $messages = [
+        'name.required' => 'Please enter your name.',
+        'email.required' => 'Please enter your email.',
+        'email.email' => 'Enter a valid email address.',
+        'phone.required' => 'Please enter your phone number.',
+        'phone.numeric' => 'Phone must be numeric.',
+        'phone.digits_between' => 'Phone must be between 7 and 15 digits.',
+        'address.required' => 'Please enter your address.',
+        'city.required' => 'Please enter your city.',
+        'state.required' => 'Please enter your state.',
+        'zip.required' => 'Please enter your ZIP code.',
+    ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function validateForm()
+    {
+        $this->validate();
+        return true;
+    }
 
     public function mount()
     {
@@ -69,15 +103,7 @@ class CheckoutPage extends Component
 
     public function placeOrder()
     {
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:500',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
-            'zip' => 'required|string|max:10',
-        ]);
+        $validated = $this->validate();
 
         $order = Order::create([
             'user_id' => Auth::id(),
