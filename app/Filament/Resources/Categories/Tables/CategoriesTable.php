@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use Filament\Actions\Action as ActionsAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
+use Filament\Actions\Action;
 
 class CategoriesTable
 {
@@ -52,6 +54,13 @@ class CategoriesTable
                         'success' => 'active',
                         'danger' => 'inactive',
                     ]),
+            ])
+            ->headerActions([
+                ActionsAction::make('sortCategories')
+                    ->label('Sort Categories')
+                    ->icon('heroicon-o-arrows-up-down')
+                    ->color('primary')
+                    ->url(fn () => url('/admin/categories/sort')),
             ])
             ->recordActions([
                 EditAction::make(),
