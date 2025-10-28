@@ -13,8 +13,12 @@
         <div class="controls-panel mb-4 bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <div class="flex justify-between items-center">
                 <div>
-                    <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200"><i class="fas fa-sitemap me-2"></i>Category Hierarchy - Infinite Depth</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Drag and drop any category to any level. Create unlimited subcategory levels.</p>
+                    <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200">
+                        <i class="fas fa-sitemap me-2"></i>Category Hierarchy - Infinite Depth
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Drag and drop any category to any level. Create unlimited subcategory levels.
+                    </p>
                 </div>
                 <div class="stats-card text-center p-3 rounded-lg text-white" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
                     <div class="stats-number text-2xl font-bold" id="totalCategories">{{ $totalCategories ?? 0 }}</div>
@@ -27,16 +31,29 @@
         <div wire:ignore>
             <div class="tree-container bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200"><i class="fas fa-tree me-2"></i>Category Structure</h4>
+                    <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200">
+                        <i class="fas fa-tree me-2"></i>Category Structure
+                    </h4>
                     <div>
-                        <button class="btn btn-success btn-sm me-2" id="saveChangesBtn"><i class="fas fa-save me-1"></i> Save Changes</button>
-                        <button class="btn btn-secondary btn-sm me-2" id="expandAllBtn"><i class="fas fa-expand-arrows-alt me-1"></i> Expand All</button>
-                        <button class="btn btn-outline-secondary btn-sm" id="collapseAllBtn"><i class="fas fa-compress-arrows-alt me-1"></i> Collapse All</button>
+                        <button class="btn btn-success btn-sm me-2" id="saveChangesBtn">
+                            <i class="fas fa-save me-1"></i> Save Changes
+                        </button>
+                        <button class="btn btn-secondary btn-sm me-2" id="expandAllBtn">
+                            <i class="fas fa-expand-arrows-alt me-1"></i> Expand All
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" id="collapseAllBtn">
+                            <i class="fas fa-compress-arrows-alt me-1"></i> Collapse All
+                        </button>
                     </div>
                 </div>
+
                 <div id="rootDropZone" class="drop-zone-root" tabindex="0">
-                    <div class="drop-zone-hint"><i class="fas fa-cloud-upload-alt"></i><span>Drop here to make root category</span></div>
+                    <div class="drop-zone-hint">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Drop here to make root category</span>
+                    </div>
                 </div>
+
                 <ul class="category-tree sortable" id="categoryTree">
                     @foreach ($tree as $category)
                         @include('filament.resources.categories.pages.partials.category-node', ['category' => $category])
@@ -44,50 +61,19 @@
                 </ul>
             </div>
         </div>
-
-        <!-- Modal for adding subcategory -->
-        {{-- <div id="addSubcategoryModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div id="addSubcategoryOverlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-            <div class="relative z-10 w-full max-w-md">
-                <div class="bg-white rounded-lg p-6 shadow-xl">
-                    <button type="button" id="modalCloseBtn" class="absolute right-3 top-3 text-gray-500 hover:text-gray-700" aria-label="Close">×</button>
-                    <h2 id="modalTitle" class="text-center text-xl font-semibold mb-6">Add Subcategory</h2>
-                    <form id="addSubcategoryForm" autocomplete="off" novalidate>
-                        <input type="hidden" id="parentIdInput" name="parent_id" value="">
-                        <div class="mb-4">
-                            <input type="text" id="categoryTitle" name="title" placeholder="Category Title" class="w-full border rounded px-3 py-2" required>
-                        </div>
-                        <div class="mb-4">
-                            <input type="text" id="categorySlug" name="slug" placeholder="Category Slug" class="w-full border rounded px-3 py-2">
-                        </div>
-                        <div class="mb-4">
-                            <select id="statusSelect" name="status" class="w-full border rounded px-3 py-2 mb-2">
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                            <label class="inline-flex items-center gap-2 text-sm">
-                                <input type="checkbox" id="featured" name="featured" class="w-4 h-4">
-                                Featured Category
-                            </label>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" id="submitBtn" class="px-4 py-2 rounded text-white" style="background: linear-gradient(135deg, #6366f1, #a855f7);">OK</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> --}}
     </div>
 
+    <!-- CSS & JS Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.3/sweetalert2.all.min.js"></script>
 
     <style>
-        /* All the styles from the reference code here */
         .tree-container {
             background: #ffffff;
             border-radius: 12px;
@@ -256,29 +242,21 @@
             content: 'Drop subcategories here or click + to add';
         }
 
-        .level-0 .category-icon { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        .level-0 .category-level { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        /* Level Colors */
+        .level-0 .category-icon, .level-0 .category-level { background: linear-gradient(135deg, #ef4444, #dc2626); }
         .level-0 .children-container::before { background: linear-gradient(180deg, #ef4444, #dc2626); }
-        .level-1 .category-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        .level-1 .category-level { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .level-1 .category-icon, .level-1 .category-level { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .level-1 .children-container::before { background: linear-gradient(180deg, #3b82f6, #2563eb); }
-        .level-2 .category-icon { background: linear-gradient(135deg, #22c55e, #16a34a); }
-        .level-2 .category-level { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .level-2 .category-icon, .level-2 .category-level { background: linear-gradient(135deg, #22c55e, #16a34a); }
         .level-2 .children-container::before { background: linear-gradient(180deg, #22c55e, #16a34a); }
-        .level-3 .category-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .level-3 .category-level { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .level-3 .category-icon, .level-3 .category-level { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .level-3 .children-container::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
-        .level-4 .category-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-        .level-4 .category-level { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .level-4 .category-icon, .level-4 .category-level { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
         .level-4 .children-container::before { background: linear-gradient(180deg, #8b5cf6, #7c3aed); }
-        .level-5 .category-icon { background: linear-gradient(135deg, #ec4899, #db2777); }
-        .level-5 .category-level { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .level-5 .category-icon, .level-5 .category-level { background: linear-gradient(135deg, #ec4899, #db2777); }
         .level-5 .children-container::before { background: linear-gradient(180deg, #ec4899, #db2777); }
-        .level-6 .category-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-        .level-6 .category-level { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .level-6 .category-icon, .level-6 .category-level { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .level-6 .children-container::before { background: linear-gradient(180deg, #06b6d4, #0891b2); }
-        .category-item[class*="level-"]:nth-child(7n+1) .category-icon { background: linear-gradient(135deg, #84cc16, #65a30d); }
-        .category-item[class*="level-"]:nth-child(7n+1) .category-level { background: linear-gradient(135deg, #84cc16, #65a30d); }
 
         .status-badge {
             font-size: 0.75rem;
@@ -287,15 +265,8 @@
             font-weight: 500;
         }
 
-        .badge-success {
-            background: #22c55e;
-            color: #ffffff;
-        }
-
-        .badge-warning {
-            background: #f59e0b;
-            color: #ffffff;
-        }
+        .badge-success { background: #22c55e; color: #fff; }
+        .badge-warning { background: #f59e0b; color: #fff; }
 
         .drop-zone-root {
             min-height: 60px;
@@ -335,14 +306,8 @@
             font-weight: bold;
         }
 
-        .sortable-ghost {
-            opacity: 0.5;
-        }
-
-        .sortable-chosen {
-            background: #e6f3ff !important;
-        }
-
+        .sortable-ghost { opacity: 0.5; }
+        .sortable-chosen { background: #e6f3ff !important; }
         .sortable-drag {
             background: #ffffff !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
@@ -372,9 +337,7 @@
                 if (parent) {
                     path.unshift(parent.title);
                     current = parent;
-                } else {
-                    break;
-                }
+                } else break;
             }
             return path.length > 0 ? path.join(' → ') : 'Root Level';
         }
@@ -404,33 +367,32 @@
                                     <span class="category-level">Level ${category.level}</span>
                                 </h6>
                                 <small>
-                                    ID: ${category.id} | Slug: ${category.slug} | Children: ${category.children ? category.children.length : 0}
+                                    ID: ${category.id} | Slug: ${category.slug} | Children: ${hasChildren ? category.children.length : 0}
                                     <div class="path-indicator" title="Category Path">${categoryPath}</div>
                                 </small>
                             </div>
                         </div>
                         <div class="category-actions">
                             <span class="status-badge badge ${statusClass}">${category.status}</span>
-                            <button class="btn-action btn-success add-sub" data-id="${category.id}" data-bs-toggle="tooltip" title="Add subcategory" tabindex="0">
+                            <button class="btn-action btn-success add-sub" data-id="${category.id}" data-bs-toggle="tooltip" title="Add subcategory">
                                 <i class="fas fa-plus"></i>
                             </button>
-                            <button class="btn-action btn-primary toggle-children" data-id="${category.id}" data-bs-toggle="tooltip" title="Toggle children" tabindex="0">
+                            <button class="btn-action btn-primary toggle-children" data-id="${category.id}" data-bs-toggle="tooltip" title="Toggle children">
                                 <i class="fas fa-${toggleIcon}"></i>
                             </button>
-                            <button class="btn-action btn-info edit-cat" data-id="${category.id}" data-bs-toggle="tooltip" title="Edit category" tabindex="0">
+                            <button class="btn-action btn-info edit-cat" data-id="${category.id}" data-bs-toggle="tooltip" title="Edit category">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn-action btn-warning move-cat" data-id="${category.id}" data-bs-toggle="tooltip" title="Quick move category" tabindex="0">
+                            <button class="btn-action btn-warning move-cat" data-id="${category.id}" data-bs-toggle="tooltip" title="Quick move category">
                                 <i class="fas fa-arrows-alt"></i>
                             </button>
-                            <button class="btn-action btn-danger delete-cat" data-id="${category.id}" data-bs-toggle="tooltip" title="Delete category" tabindex="0">
+                            <button class="btn-action btn-danger delete-cat" data-id="${category.id}" data-bs-toggle="tooltip" title="Delete category">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     </div>
                     <div class="children-container ${containerClass}" data-parent="${category.id}">
-                        <ul class="children-tree sortable" data-parent="${category.id}">
-            `;
+                        <ul class="children-tree sortable" data-parent="${category.id}">`;
 
             if (hasChildren) {
                 category.children.forEach(child => {
@@ -438,12 +400,7 @@
                 });
             }
 
-            html += `
-                        </ul>
-                    </div>
-                </li>
-            `;
-
+            html += `</ul></div></li>`;
             return html;
         }
 
@@ -458,18 +415,10 @@
 
         function bindCategoryEvents() {
             $('.toggle-children').off('click').on('click', toggleChildren);
-            $('.add-sub').off('click').on('click', function() {
-                addSubcategory($(this).data('id'));
-            });
-            $('.edit-cat').off('click').on('click', function() {
-                editCategory($(this).data('id'));
-            });
-            $('.move-cat').off('click').on('click', function() {
-                quickMoveCategory($(this).data('id'));
-            });
-            $('.delete-cat').off('click').on('click', function() {
-                deleteCategory($(this).data('id'));
-            });
+            $('.add-sub').off('click').on('click', e => addSubcategory($(e.currentTarget).data('id')));
+            $('.edit-cat').off('click').on('click', e => editCategory($(e.currentTarget).data('id')));
+            $('.move-cat').off('click').on('click', e => quickMoveCategory($(e.currentTarget).data('id')));
+            $('.delete-cat').off('click').on('click', e => deleteCategory($(e.currentTarget).data('id')));
         }
 
         function getExpandedIds() {
@@ -480,27 +429,22 @@
 
         function setExpanded(ids) {
             ids.forEach(id => {
-                const btn = $(`.toggle-children[data-id="${id}"]`);
-                btn.find('i').removeClass('fa-plus').addClass('fa-minus');
                 $(`.children-container[data-parent="${id}"]`).removeClass('d-none');
+                $(`.toggle-children[data-id="${id}"] i`).removeClass('fa-plus').addClass('fa-minus');
             });
         }
 
         function destroyAllSortables() {
-            sortableInstances.forEach(instance => {
-                if (instance && typeof instance.destroy === 'function') {
-                    instance.destroy();
-                }
-            });
+            sortableInstances.forEach(instance => instance?.destroy());
             sortableInstances = [];
         }
 
         function initializeAllSortables() {
             destroyAllSortables();
             initializeRootDropZone();
-            const sortableContainers = document.querySelectorAll('.sortable');
-            sortableContainers.forEach(container => {
-                const sortableInstance = new Sortable(container, {
+
+            document.querySelectorAll('.sortable').forEach(container => {
+                const instance = new Sortable(container, {
                     group: 'nested-categories',
                     animation: 200,
                     fallbackOnBody: true,
@@ -509,20 +453,11 @@
                     chosenClass: 'sortable-chosen',
                     dragClass: 'sortable-drag',
                     handle: '.category-item',
-                    onStart: function(evt) {
-                        evt.item.classList.add('dragging');
-                        document.querySelectorAll('.children-tree').forEach(zone => {
-                            if (!zone.contains(evt.item)) {
-                                zone.classList.add('drop-zone-active');
-                            }
-                        });
-                        document.getElementById('rootDropZone').classList.add('drop-zone-active');
-                    },
-                    onEnd: function(evt) {
+                    onStart: evt => evt.item.classList.add('dragging'),
+                    onEnd: evt => {
                         evt.item.classList.remove('dragging');
-                        document.querySelectorAll('.children-tree, #rootDropZone').forEach(zone => {
-                            zone.classList.remove('drop-zone-active', 'drag-over-empty');
-                        });
+                        document.querySelectorAll('.children-tree, #rootDropZone')
+                            .forEach(z => z.classList.remove('drop-zone-active', 'drag-over-empty'));
                         hasChanges = true;
                         const expanded = getExpandedIds();
                         updateCategoryDataFromDOM();
@@ -533,29 +468,22 @@
                         updateStats();
                         showSaveButton();
                     },
-                    onMove: function(evt) {
+                    onMove: evt => {
                         const draggedId = parseInt(evt.dragged.dataset.id);
-                        const targetContainer = evt.to;
-                        if (targetContainer.dataset.parent) {
-                            const targetParentId = parseInt(targetContainer.dataset.parent);
-                            if (isDescendantOf(targetParentId, draggedId)) {
-                                return false;
-                            }
-                        }
-                        return true;
+                        const targetParentId = evt.to.dataset.parent ? parseInt(evt.to.dataset.parent) : null;
+                        return !targetParentId || !isDescendantOf(targetParentId, draggedId);
                     }
                 });
-                sortableInstances.push(sortableInstance);
+                sortableInstances.push(instance);
             });
         }
 
         function initializeRootDropZone() {
-            const rootDropZone = document.getElementById('rootDropZone');
-            const rootSortable = new Sortable(rootDropZone, {
+            const rootZone = document.getElementById('rootDropZone');
+            const rootSortable = new Sortable(rootZone, {
                 group: 'nested-categories',
                 animation: 200,
-                onAdd: function(evt) {
-                    document.getElementById('categoryTree').appendChild(evt.item);
+                onAdd: () => {
                     hasChanges = true;
                     const expanded = getExpandedIds();
                     updateCategoryDataFromDOM();
@@ -571,21 +499,13 @@
         }
 
         function isDescendantOf(parentId, childId) {
-            const category = findCategoryById(categoryData, parentId);
-            if (!category) return false;
-            if (category.id === childId) return true;
-            if (category.children) {
-                for (let child of category.children) {
-                    if (isDescendantOf(child.id, childId)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            const cat = findCategoryById(categoryData, parentId);
+            if (!cat || cat.id === childId) return cat?.id === childId;
+            return cat.children?.some(c => isDescendantOf(c.id, childId));
         }
 
-        function findCategoryById(categories, id) {
-            for (const cat of categories) {
+        function findCategoryById(cats, id) {
+            for (const cat of cats) {
                 if (cat.id === id) return cat;
                 if (cat.children) {
                     const found = findCategoryById(cat.children, id);
@@ -595,17 +515,23 @@
             return null;
         }
 
-        function toggleChildren(evt) {
-            const btn = $(evt.target).closest('.toggle-children');
-            const childrenContainer = btn.closest('.category-item').find('> .children-container');
+        function toggleChildren(e) {
+            const btn = $(e.target).closest('.toggle-children');
+            const container = btn.closest('.category-item').find('> .children-container');
             const icon = btn.find('i');
-            childrenContainer.toggleClass('d-none');
+            container.toggleClass('d-none');
             icon.toggleClass('fa-minus fa-plus');
         }
 
         function expandAll() {
-            $('.children-container').removeClass('d-none');
-            $('.toggle-children i').removeClass('fa-plus').addClass('fa-minus');
+            $('.children-container').each(function() {
+                const $container = $(this);
+                if ($container.find('.children-tree > li').length > 0) {
+                    $container.removeClass('d-none');
+                    $container.closest('.category-item').find('.toggle-children i')
+                        .removeClass('fa-plus').addClass('fa-minus');
+                }
+            });
         }
 
         function collapseAll() {
@@ -614,246 +540,146 @@
         }
 
         function updateStats() {
-            function countCategories(cats) {
-                let count = cats.length;
-                cats.forEach(cat => {
-                    if (cat.children) {
-                        count += countCategories(cat.children);
-                    }
-                });
-                return count;
-            }
-            
-            function calculateMaxDepth(cats, currentDepth = 0) {
-                if (!cats || cats.length === 0) return currentDepth;
-                let maxDepth = currentDepth;
-                cats.forEach(cat => {
-                    const categoryDepth = cat.level || currentDepth;
-                    maxDepth = Math.max(maxDepth, categoryDepth);
-                    if (cat.children) {
-                        maxDepth = Math.max(maxDepth, calculateMaxDepth(cat.children, categoryDepth + 1));
-                    }
-                });
-                return maxDepth;
-            }
-            
-            const totalCount = countCategories(categoryData);
-            const maxDepth = calculateMaxDepth(categoryData);
-            $('#totalCategories').text(totalCount);
-            $('#maxDepth').text(maxDepth);
+            const countCategories = cats => cats.reduce((c, cat) => c + 1 + (cat.children ? countCategories(cat.children) : 0), 0);
+            const calculateMaxDepth = (cats, depth = 0) => {
+                if (!cats.length) return depth;
+                return Math.max(...cats.map(cat => calculateMaxDepth(cat.children || [], (cat.level ?? depth) + 1)), depth);
+            };
+            $('#totalCategories').text(countCategories(categoryData));
+            $('#maxDepth').text(calculateMaxDepth(categoryData));
         }
 
         function showSaveButton() {
-            const saveBtn = $('#saveChangesBtn');
-            saveBtn.addClass('btn-warning').removeClass('btn-success');
-            saveBtn.html('<i class="fas fa-exclamation-triangle me-1"></i>Save Changes');
+            $('#saveChangesBtn')
+                .removeClass('btn-success').addClass('btn-warning')
+                .html('<i class="fas fa-exclamation-triangle me-1"></i> Save Changes');
         }
 
         function updateCategoryDataFromDOM() {
             categoryData = [];
-            const rootItems = document.querySelectorAll('#categoryTree > li');
-
-            function processItem(item, parentId = null, level = 0, order = 0) {
+            const processItem = (item, parentId = null, level = 0, order = 0) => {
                 const id = parseInt(item.dataset.id);
                 const original = findCategoryById(categoryDataOriginal, id);
-
                 if (!original) return null;
 
-                const newCategory = {
-                    id: id,
-                    parent_id: parentId,
-                    level: level,
-                    sort_order: order + 1,
-                    title: original.title,
-                    slug: original.slug,
-                    status: original.status,
-                    is_featured: original.is_featured,
-                    children: [],
-                    children_count: 0
+                const newCat = {
+                    id, parent_id: parentId, level, sort_order: order + 1,
+                    title: original.title, slug: original.slug,
+                    status: original.status, is_featured: original.is_featured,
+                    children: [], children_count: 0
                 };
 
-                const childrenContainer = item.querySelector(':scope > .children-container > .children-tree');
-                if (childrenContainer) {
-                    const childItems = childrenContainer.querySelectorAll(':scope > li');
-                    childItems.forEach((childItem, childOrder) => {
-                        const child = processItem(childItem, id, level + 1, childOrder);
-                        if (child) {
-                            newCategory.children.push(child);
-                        }
+                const childrenList = item.querySelector(':scope > .children-container > .children-tree');
+                if (childrenList) {
+                    [...childrenList.children].forEach((child, i) => {
+                        const c = processItem(child, id, level + 1, i);
+                        if (c) newCat.children.push(c);
                     });
                 }
+                newCat.children_count = newCat.children.length;
+                return newCat;
+            };
 
-                newCategory.children_count = newCategory.children.length;
-                return newCategory;
-            }
-
-            rootItems.forEach((item, order) => {
-                const processed = processItem(item, null, 0, order);
-                if (processed) {
-                    categoryData.push(processed);
-                }
+            $('#categoryTree > li').each((i, el) => {
+                const cat = processItem(el, null, 0, i);
+                if (cat) categoryData.push(cat);
             });
         }
 
         function saveChanges() {
-            if (!hasChanges) {
-                Swal.fire({ icon: 'info', title: 'No Changes', text: 'No changes to save!' });
-                return;
-            }
+            if (!hasChanges) return Swal.fire({ icon: 'info', title: 'No Changes', text: 'Nothing to save!' });
 
-            const saveBtn = $('#saveChangesBtn');
-            const originalHtml = saveBtn.html();
-            saveBtn.html('<i class="fas fa-spinner fa-spin me-1"></i>Saving...').prop('disabled', true);
+            const btn = $('#saveChangesBtn').html('Saving...').prop('disabled', true);
+            const original = btn.html();
 
-            const flattened = [];
+            const flatten = (cats, parent = null) => cats.flatMap((c, i) => [
+                { id: c.id, parent_id: parent, sort_order: i + 1, level: c.level },
+                ...(c.children ? flatten(c.children, c.id) : [])
+            ]);
 
-            function flattenTree(cats, parentId = null) {
-                cats.forEach((cat, index) => {
-                    flattened.push({
-                        id: cat.id,
-                        parent_id: parentId,
-                        sort_order: index + 1,
-                        level: cat.level
-                    });
-                    if (cat.children && cat.children.length > 0) {
-                        flattenTree(cat.children, cat.id);
-                    }
-                });
-            }
-
-            flattenTree(categoryData);
-
-            $.ajax({
-                url: '{{ route("admin.categories.update-tree") }}',
-                method: 'POST',
-                data: {
-                    _token: csrfToken,
-                    categories: flattened
-                },
-                success: function(response) {
-                    if (response.success) {
-                        hasChanges = false;
-                        categoryDataOriginal = JSON.parse(JSON.stringify(categoryData));
-                        saveBtn.html('<i class="fas fa-check me-1"></i>Saved').addClass('btn-success').removeClass('btn-warning');
-                        setTimeout(() => {
-                            saveBtn.html(originalHtml).prop('disabled', false);
-                        }, 2000);
-                        Swal.fire({ icon: 'success', title: 'Success', text: 'Category hierarchy saved successfully!' });
-                    } else {
-                        Swal.fire({ icon: 'error', title: 'Error', text: response.message || 'Failed to save changes' });
-                        saveBtn.html(originalHtml).prop('disabled', false);
-                    }
-                },
-                error: function() {
-                    Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to save changes' });
-                    saveBtn.html(originalHtml).prop('disabled', false);
+            $.post('{{ route("admin.categories.update-tree") }}', {
+                _token: csrfToken,
+                categories: flatten(categoryData)
+            }).done(res => {
+                if (res.success) {
+                    hasChanges = false;
+                    categoryDataOriginal = JSON.parse(JSON.stringify(categoryData));
+                    btn.html('Saved').addClass('btn-success').removeClass('btn-warning');
+                    setTimeout(() => btn.html(original).prop('disabled', false), 2000);
+                    Swal.fire('Success', 'Hierarchy saved!', 'success');
+                } else {
+                    Swal.fire('Error', res.message || 'Save failed', 'error');
+                    btn.html(original).prop('disabled', false);
                 }
+            }).fail(() => {
+                Swal.fire('Error', 'Network error', 'error');
+                btn.html(original).prop('disabled', false);
             });
         }
 
-        function quickMoveCategory(categoryId) {
-            const allCategories = [];
-            
-            function collectCategories(cats, level = 0, path = '') {
+        function quickMoveCategory(id) {
+            const collect = (cats, level = 0, path = '') => {
+                const res = [];
                 cats.forEach(cat => {
-                    if (cat.id !== categoryId && !isDescendantOf(cat.id, categoryId)) {
-                        const indent = '&nbsp;'.repeat(level * 4);
-                        const currentPath = path ? `${path} → ${cat.title}` : cat.title;
-                        allCategories.push({
+                    if (cat.id !== id && !isDescendantOf(cat.id, id)) {
+                        res.push({
                             id: cat.id,
-                            title: cat.title,
-                            level: level,
-                            path: currentPath,
-                            html: `${indent}<i class="fas fa-folder"></i> ${cat.title} <small class="text-muted">(Level ${cat.level})</small>`
+                            html: `${'&nbsp;'.repeat(level * 4)} ${cat.title} <small class="text-muted">(L${cat.level})</small>`
                         });
-                        if (cat.children) {
-                            collectCategories(cat.children, level + 1, currentPath);
-                        }
+                        if (cat.children) res.push(...collect(cat.children, level + 1, path ? `${path} → ${cat.title}` : cat.title));
                     }
                 });
-            }
-            
-            collectCategories(categoryData);
-            
-            let optionsHtml = '<option value="">-- Root Level --</option>';
-            allCategories.forEach(cat => {
-                optionsHtml += `<option value="${cat.id}">${cat.html}</option>`;
-            });
-            
-            const currentCategory = findCategoryById(categoryData, categoryId);
-            
+                return res;
+            };
+
+            const options = collect(categoryData);
+            const current = findCategoryById(categoryData, id);
+            const select = `<select id="parentSelect" class="form-control"><option value="">-- Root Level --</option>${options.map(o => `<option value="${o.id}">${o.html}</option>`).join('')}</select>`;
+
             Swal.fire({
-                title: `Move "${currentCategory.title}"`,
-                html: `
-                    <p class="text-muted mb-3">Select new parent category:</p>
-                    <select id="parentSelect" class="form-control">
-                        ${optionsHtml}
-                    </select>
-                    <div class="mt-3">
-                        <small class="text-info">
-                            <i class="fas fa-info-circle"></i> 
-                            Current: Level ${currentCategory.level} 
-                            ${currentCategory.parent_id ? '(Has Parent)' : '(Root Level)'}
-                        </small>
-                    </div>
-                `,
+                title: `Move "${current.title}"`,
+                html: `<p class="text-muted mb-2">New parent:</p>${select}<div class="mt-2"><small class="text-info">Current: Level ${current.level}</small></div>`,
                 showCancelButton: true,
-                confirmButtonText: 'Move Category',
                 preConfirm: () => document.getElementById('parentSelect').value || null
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    moveCategory(categoryId, result.value);
-                }
-            });
+            }).then(r => r.isConfirmed && moveCategory(id, r.value));
         }
 
-        function moveCategory(categoryId, newParentId) {
+        function moveCategory(id, newParentId) {
             hasChanges = true;
-            let categoryToMove = null;
-            
-            function removeFromTree(cats) {
+            let moved = null;
+
+            const remove = cats => {
                 for (let i = 0; i < cats.length; i++) {
-                    if (cats[i].id === categoryId) {
-                        categoryToMove = cats.splice(i, 1)[0];
-                        return true;
-                    }
-                    if (cats[i].children && removeFromTree(cats[i].children)) {
+                    if (cats[i].id === id) return !!(moved = cats.splice(i, 1)[0]);
+                    if (cats[i].children && remove(cats[i].children)) {
                         cats[i].children_count = cats[i].children.length;
                         return true;
                     }
                 }
                 return false;
-            }
-            
-            removeFromTree(categoryData);
-            
-            if (!categoryToMove) {
-                Swal.fire('Error', 'Category not found!', 'error');
-                return;
-            }
-            
-            function updateLevels(cat, newLevel) {
-                cat.level = newLevel;
-                if (cat.children) {
-                    cat.children.forEach(child => updateLevels(child, newLevel + 1));
-                }
-            }
-            
+            };
+            remove(categoryData);
+
+            const updateLevel = (cat, lvl) => {
+                cat.level = lvl;
+                cat.children?.forEach(c => updateLevel(c, lvl + 1));
+            };
+
             if (newParentId) {
-                const newParent = findCategoryById(categoryData, parseInt(newParentId));
-                if (newParent) {
-                    if (!newParent.children) newParent.children = [];
-                    categoryToMove.parent_id = parseInt(newParentId);
-                    updateLevels(categoryToMove, newParent.level + 1);
-                    newParent.children.push(categoryToMove);
-                    newParent.children_count = newParent.children.length;
+                const parent = findCategoryById(categoryData, +newParentId);
+                if (parent) {
+                    parent.children = parent.children || [];
+                    moved.parent_id = +newParentId;
+                    updateLevel(moved, parent.level + 1);
+                    parent.children.push(moved);
+                    parent.children_count = parent.children.length;
                 }
             } else {
-                categoryToMove.parent_id = null;
-                updateLevels(categoryToMove, 0);
-                categoryData.push(categoryToMove);
+                moved.parent_id = null;
+                updateLevel(moved, 0);
+                categoryData.push(moved);
             }
-            
+
             const expanded = getExpandedIds();
             renderCategoryTree();
             setExpanded(expanded);
@@ -861,192 +687,127 @@
             initializeTooltips();
             updateStats();
             showSaveButton();
-            
-            Swal.fire({
-                icon: 'success',
-                title: 'Category Moved',
-                text: `"${categoryToMove.title}" has been moved successfully!`,
-                timer: 2000,
-                showConfirmButton: false
-            });
+
+            Swal.fire('Moved!', `"${moved.title}" moved successfully.`, 'success');
         }
 
         function addSubcategory(parentId) {
             Swal.fire({
                 title: parentId ? 'Add Subcategory' : 'Add Root Category',
                 html: `
-                    <input id="swal-input1" class="swal2-input" placeholder="Category Title" required>
-                    <input id="swal-input2" class="swal2-input" placeholder="Category Slug" required>
+                    <input id="swal-input1" class="swal2-input" placeholder="Title" required>
+                    <input id="swal-input2" class="swal2-input" placeholder="Slug" required>
                     <select id="swal-input3" class="swal2-select">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
-                    <div class="form-check mt-2">
-                        <input type="checkbox" id="swal-input4" class="form-check-input">
-                        <label for="swal-input4" class="form-check-label">Featured Category</label>
+                    <div class="text-start mt-2">
+                        <label><input type="checkbox" id="swal-input4" class="me-2"> Featured</label>
                     </div>
                 `,
-                focusConfirm: false,
                 preConfirm: () => {
-                    const title = document.getElementById('swal-input1').value;
-                    const slug = document.getElementById('swal-input2').value;
-                    const status = document.getElementById('swal-input3').value;
-                    const is_featured = document.getElementById('swal-input4').checked;
-                    if (!title || !slug) {
-                        Swal.showValidationMessage('Please enter both title and slug');
-                        return false;
-                    }
-                    return { title, slug, status, is_featured };
+                    const title = $('#swal-input1').val(), slug = $('#swal-input2').val();
+                    if (!title || !slug) { Swal.showValidationMessage('Title & Slug required'); return false; }
+                    return { title, slug, status: $('#swal-input3').val(), is_featured: $('#swal-input4').is(':checked') };
                 }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const { title, slug, status, is_featured } = result.value;
-                    $.ajax({
-                        url: '/admin/categories/create',
-                        type: 'POST',
-                        data: {
-                            _token: csrfToken,
-                            title: title,
-                            slug: slug,
-                            status: status,
-                            is_featured: is_featured ? 1 : 0,
-                            parent_id: parentId || null
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                const newCategory = response.data; // Assume response.data has the new category with id, etc.
-                                if (parentId) {
-                                    const parent = findCategoryById(categoryData, parentId);
-                                    if (parent) {
-                                        if (!parent.children) parent.children = [];
-                                        newCategory.children = [];
-                                        newCategory.children_count = 0;
-                                        newCategory.level = parent.level + 1;
-                                        parent.children.push(newCategory);
-                                        parent.children_count = parent.children.length;
-                                    }
-                                } else {
-                                    newCategory.children = [];
-                                    newCategory.children_count = 0;
-                                    newCategory.level = 0;
-                                    categoryData.push(newCategory);
-                                }
-                                categoryDataOriginal = JSON.parse(JSON.stringify(categoryData));
-                                const expanded = getExpandedIds();
-                                renderCategoryTree();
-                                setExpanded(expanded);
-                                initializeAllSortables();
-                                initializeTooltips();
-                                updateStats();
-                                Swal.fire({ icon: 'success', title: 'Success', text: 'Category added successfully!', timer: 2000 });
-                            } else {
-                                Swal.fire('Error', response.message || 'Failed to add category', 'error');
-                            }
-                        },
-                        error: function() {
-                            Swal.fire('Error', 'Failed to add category', 'error');
+            }).then(r => {
+                if (!r.isConfirmed) return;
+                const { title, slug, status, is_featured } = r.value;
+
+                $.post('/admin/categories', {
+                    _token: csrfToken, title, slug, status, is_featured: is_featured ? 1 : 0, parent_id: parentId || null
+                }).done(res => {
+                    if (res.success) {
+                        const cat = res.data;
+                        cat.children = []; cat.children_count = 0;
+                        cat.level = parentId ? (findCategoryById(categoryData, parentId).level + 1) : 0;
+
+                        if (parentId) {
+                            const p = findCategoryById(categoryData, parentId);
+                            p.children.push(cat); p.children_count++;
+                        } else {
+                            categoryData.push(cat);
                         }
-                    });
-                }
+
+                        categoryDataOriginal = JSON.parse(JSON.stringify(categoryData));
+                        const expanded = getExpandedIds();
+                        renderCategoryTree();
+                        setExpanded(expanded);
+                        initializeAllSortables();
+                        initializeTooltips();
+                        updateStats();
+                        Swal.fire('Added!', 'Category created.', 'success');
+                    } else {
+                        Swal.fire('Error', res.message || 'Failed', 'error');
+                    }
+                }).fail(() => Swal.fire('Error', 'Network error', 'error'));
             });
         }
 
         function editCategory(id) {
-            window.location.href = '/admin/categories/edit';
+            window.location = `/admin/categories/${id}/edit`;
         }
 
         function deleteCategory(id) {
-            const category = findCategoryById(categoryData, id);
-            if (!category) {
-                Swal.fire('Error', 'Category not found!', 'error');
-                return;
-            }
-            
-            const hasChildren = category.children && category.children.length > 0;
-            const warningText = hasChildren 
-                ? `This will delete "${category.title}" and all its ${category.children_count} subcategories!`
-                : `This will delete "${category.title}".`;
-            
+            const cat = findCategoryById(categoryData, id);
+            if (!cat) return Swal.fire('Error', 'Not found', 'error');
+
             Swal.fire({
-                title: 'Are you sure?',
-                text: warningText,
+                title: 'Delete?',
+                text: cat.children?.length ? `Delete "${cat.title}" and ${cat.children_count} subcategories?` : `Delete "${cat.title}"?`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/admin/categories/destroy',
-                        method: 'DELETE',
-                        data: {
-                            _token: csrfToken
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                // Remove from categoryData
-                                function removeFromTree(cats) {
-                                    for (let i = 0; i < cats.length; i++) {
-                                        if (cats[i].id === id) {
-                                            cats.splice(i, 1);
-                                            return true;
-                                        }
-                                        if (cats[i].children && removeFromTree(cats[i].children)) {
-                                            cats[i].children_count = cats[i].children.length;
-                                            return true;
-                                        }
-                                    }
-                                    return false;
+                confirmButtonText: 'Yes, delete!'
+            }).then(r => {
+                if (!r.isConfirmed) return;
+
+                $.ajax({
+                    url: `/admin/categories/${id}`, method: 'DELETE', data: { _token: csrfToken }
+                }).done(res => {
+                    if (res.success) {
+                        const remove = cats => {
+                            for (let i = 0; i < cats.length; i++) {
+                                if (cats[i].id === id) { cats.splice(i, 1); return true; }
+                                if (cats[i].children && remove(cats[i].children)) {
+                                    cats[i].children_count = cats[i].children.length;
+                                    return true;
                                 }
-                                removeFromTree(categoryData);
-                                categoryDataOriginal = JSON.parse(JSON.stringify(categoryData));
-                                const expanded = getExpandedIds();
-                                renderCategoryTree();
-                                setExpanded(expanded);
-                                initializeAllSortables();
-                                initializeTooltips();
-                                updateStats();
-                                Swal.fire({ icon: 'success', title: 'Deleted!', text: 'Category has been deleted successfully.', timer: 2000 });
-                            } else {
-                                Swal.fire('Error', response.message || 'Failed to delete category', 'error');
                             }
-                        },
-                        error: function() {
-                            Swal.fire('Error', 'Failed to delete category', 'error');
-                        }
-                    });
-                }
+                            return false;
+                        };
+                        remove(categoryData);
+                        categoryDataOriginal = JSON.parse(JSON.stringify(categoryData));
+                        const expanded = getExpandedIds();
+                        renderCategoryTree();
+                        setExpanded(expanded);
+                        initializeAllSortables();
+                        initializeTooltips();
+                        updateStats();
+                        Swal.fire('Deleted!', 'Category removed.', 'success');
+                    } else {
+                        Swal.fire('Error', res.message || 'Failed', 'error');
+                    }
+                }).fail(() => Swal.fire('Error', 'Network error', 'error'));
             });
         }
 
         function initializeTooltips() {
             document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-                const tooltip = bootstrap.Tooltip.getInstance(el);
-                if (tooltip) tooltip.dispose();
-            });
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-            tooltipTriggerList.forEach(tooltipTriggerEl => {
-                new bootstrap.Tooltip(tooltipTriggerEl);
+                bootstrap.Tooltip.getInstance(el)?.dispose();
+                new bootstrap.Tooltip(el);
             });
         }
 
         $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                }
-            });
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': csrfToken } });
             initializePage();
+
             $('#saveChangesBtn').on('click', saveChanges);
             $('#expandAllBtn').on('click', expandAll);
             $('#collapseAllBtn').on('click', collapseAll);
 
-            window.addEventListener('beforeunload', (e) => {
-                if (hasChanges) {
-                    e.preventDefault();
-                    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
-                }
+            window.addEventListener('beforeunload', e => {
+                if (hasChanges) (e || window.event).returnValue = 'Unsaved changes!';
             });
         });
     </script>
