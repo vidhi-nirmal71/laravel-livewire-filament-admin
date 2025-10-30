@@ -1,16 +1,9 @@
 <x-filament-panels::page>
     <div class="space-y-6">
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-            Category Tree Manager - Infinite Levels
-        </h2>
 
-        <div class="rounded-lg bg-gray-50 dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
-            <p class="text-sm text-gray-600 dark:text-gray-400">
-                Drag and drop any category to any level. Create unlimited subcategory levels. Click <strong>Save Changes</strong> once done.
-            </p>
-        </div>
 
-        <div class="controls-panel mb-4 bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+        <div
+            class="controls-panel mb-4 bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <div class="flex justify-between items-center">
                 <div>
                     <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200">
@@ -20,7 +13,8 @@
                         Drag and drop any category to any level. Create unlimited subcategory levels.
                     </p>
                 </div>
-                <div class="stats-card text-center p-3 rounded-lg text-white" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                <div class="stats-card text-center p-3 rounded-lg text-white"
+                    style="background: linear-gradient(135deg, #6366f1, #a855f7);">
                     <div class="stats-number text-2xl font-bold" id="totalCategories">{{ $totalCategories ?? 0 }}</div>
                     <div>Total Categories</div>
                     <div class="mt-2 text-sm">Max Depth: <span id="maxDepth">{{ $maxDepth ?? 0 }}</span></div>
@@ -29,7 +23,8 @@
         </div>
 
         <div wire:ignore>
-            <div class="tree-container bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+            <div
+                class="tree-container bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="text-lg font-medium text-gray-800 dark:text-gray-200">
                         <i class="fas fa-tree me-2"></i>Category Structure
@@ -56,7 +51,9 @@
 
                 <ul class="category-tree sortable" id="categoryTree">
                     @foreach ($tree as $category)
-                        @include('filament.resources.categories.pages.partials.category-node', ['category' => $category])
+                        @include('filament.resources.categories.pages.partials.category-node', [
+                            'category' => $category,
+                        ])
                     @endforeach
                 </ul>
             </div>
@@ -243,20 +240,68 @@
         }
 
         /* Level Colors */
-        .level-0 .category-icon, .level-0 .category-level { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        .level-0 .children-container::before { background: linear-gradient(180deg, #ef4444, #dc2626); }
-        .level-1 .category-icon, .level-1 .category-level { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        .level-1 .children-container::before { background: linear-gradient(180deg, #3b82f6, #2563eb); }
-        .level-2 .category-icon, .level-2 .category-level { background: linear-gradient(135deg, #22c55e, #16a34a); }
-        .level-2 .children-container::before { background: linear-gradient(180deg, #22c55e, #16a34a); }
-        .level-3 .category-icon, .level-3 .category-level { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .level-3 .children-container::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
-        .level-4 .category-icon, .level-4 .category-level { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-        .level-4 .children-container::before { background: linear-gradient(180deg, #8b5cf6, #7c3aed); }
-        .level-5 .category-icon, .level-5 .category-level { background: linear-gradient(135deg, #ec4899, #db2777); }
-        .level-5 .children-container::before { background: linear-gradient(180deg, #ec4899, #db2777); }
-        .level-6 .category-icon, .level-6 .category-level { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-        .level-6 .children-container::before { background: linear-gradient(180deg, #06b6d4, #0891b2); }
+        .level-0 .category-icon,
+        .level-0 .category-level {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .level-0 .children-container::before {
+            background: linear-gradient(180deg, #ef4444, #dc2626);
+        }
+
+        .level-1 .category-icon,
+        .level-1 .category-level {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .level-1 .children-container::before {
+            background: linear-gradient(180deg, #3b82f6, #2563eb);
+        }
+
+        .level-2 .category-icon,
+        .level-2 .category-level {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .level-2 .children-container::before {
+            background: linear-gradient(180deg, #22c55e, #16a34a);
+        }
+
+        .level-3 .category-icon,
+        .level-3 .category-level {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .level-3 .children-container::before {
+            background: linear-gradient(180deg, #f59e0b, #d97706);
+        }
+
+        .level-4 .category-icon,
+        .level-4 .category-level {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .level-4 .children-container::before {
+            background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+        }
+
+        .level-5 .category-icon,
+        .level-5 .category-level {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+
+        .level-5 .children-container::before {
+            background: linear-gradient(180deg, #ec4899, #db2777);
+        }
+
+        .level-6 .category-icon,
+        .level-6 .category-level {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+
+        .level-6 .children-container::before {
+            background: linear-gradient(180deg, #06b6d4, #0891b2);
+        }
 
         .status-badge {
             font-size: 0.75rem;
@@ -265,8 +310,15 @@
             font-weight: 500;
         }
 
-        .badge-success { background: #22c55e; color: #fff; }
-        .badge-warning { background: #f59e0b; color: #fff; }
+        .badge-success {
+            background: #22c55e;
+            color: #fff;
+        }
+
+        .badge-warning {
+            background: #f59e0b;
+            color: #fff;
+        }
 
         .drop-zone-root {
             min-height: 60px;
@@ -306,12 +358,57 @@
             font-weight: bold;
         }
 
-        .sortable-ghost { opacity: 0.5; }
-        .sortable-chosen { background: #e6f3ff !important; }
+        .sortable-ghost {
+            opacity: 0.5;
+        }
+
+        .sortable-chosen {
+            background: #e6f3ff !important;
+        }
+
         .sortable-drag {
             background: #ffffff !important;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
             transform: rotate(5deg) !important;
+        }
+
+        .fi-body:where(.dark, .dark *) {
+            background-color: var(--gray-950);
+            color: var(--color-white);
+        }
+
+        /* Common elements that should match Filament's dark theme */
+        .fi-body.dark .controls-panel,
+        .fi-body.dark .tree-container,
+        .fi-body.dark #rootDropZone,
+        .fi-body.dark .category-item[class*="level-"],
+        .fi-body.dark .path-indicator,
+        .fi-body:where(.dark, .dark *) .controls-panel,
+        .fi-body:where(.dark, .dark *) .tree-container,
+        .fi-body:where(.dark, .dark *) #rootDropZone,
+        .fi-body:where(.dark, .dark *) .category-item[class*="level-"],
+        .fi-body:where(.dark, .dark *) .path-indicator {
+            background-color: var(--gray-950) !important;
+            color: var(--color-white) !important;
+            border-color: var(--gray-800) !important;
+        }
+
+        ol,
+        ul {
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+        }
+
+        a {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+
+        .fi-body.dark .swal2-popup.swal2-modal.swal2-show,
+        .fi-body:where(.dark, .dark *) .swal2-popup.swal2-modal.swal2-show {
+            background-color: var(--gray-950) !important;
+            color: var(--color-white) !important;
+            border: 1px solid var(--gray-800) !important;
         }
     </style>
 
@@ -470,7 +567,8 @@
                     },
                     onMove: evt => {
                         const draggedId = parseInt(evt.dragged.dataset.id);
-                        const targetParentId = evt.to.dataset.parent ? parseInt(evt.to.dataset.parent) : null;
+                        const targetParentId = evt.to.dataset.parent ? parseInt(evt.to.dataset.parent) :
+                            null;
                         return !targetParentId || !isDescendantOf(targetParentId, draggedId);
                     }
                 });
@@ -540,10 +638,12 @@
         }
 
         function updateStats() {
-            const countCategories = cats => cats.reduce((c, cat) => c + 1 + (cat.children ? countCategories(cat.children) : 0), 0);
+            const countCategories = cats => cats.reduce((c, cat) => c + 1 + (cat.children ? countCategories(cat.children) :
+                0), 0);
             const calculateMaxDepth = (cats, depth = 0) => {
                 if (!cats.length) return depth;
-                return Math.max(...cats.map(cat => calculateMaxDepth(cat.children || [], (cat.level ?? depth) + 1)), depth);
+                return Math.max(...cats.map(cat => calculateMaxDepth(cat.children || [], (cat.level ?? depth) + 1)),
+                    depth);
             };
             $('#totalCategories').text(countCategories(categoryData));
             $('#maxDepth').text(calculateMaxDepth(categoryData));
@@ -563,10 +663,16 @@
                 if (!original) return null;
 
                 const newCat = {
-                    id, parent_id: parentId, level, sort_order: order + 1,
-                    title: original.title, slug: original.slug,
-                    status: original.status, is_featured: original.is_featured,
-                    children: [], children_count: 0
+                    id,
+                    parent_id: parentId,
+                    level,
+                    sort_order: order + 1,
+                    title: original.title,
+                    slug: original.slug,
+                    status: original.status,
+                    is_featured: original.is_featured,
+                    children: [],
+                    children_count: 0
                 };
 
                 const childrenList = item.querySelector(':scope > .children-container > .children-tree');
@@ -587,19 +693,28 @@
         }
 
         function saveChanges() {
-            if (!hasChanges) return Swal.fire({ icon: 'info', title: 'No Changes', text: 'Nothing to save!' });
+            if (!hasChanges) return Swal.fire({
+                icon: 'info',
+                title: 'No Changes',
+                text: 'Nothing to save!'
+            });
 
-            const btn = $('#saveChangesBtn').html('Saving...').prop('disabled', true);
-            const original = btn.html();
+            const btn = $('#saveChangesBtn');
+            const original = btn.html(); // capture original first
+            btn.html('Saving...').prop('disabled', true);
 
-            const flatten = (cats, parent = null) => cats.flatMap((c, i) => [
-                { id: c.id, parent_id: parent, sort_order: i + 1, level: c.level },
+            const flatten = (cats, parent = null) => cats.flatMap((c, i) => [{
+                    id: c.id,
+                    parent_id: parent,
+                    sort_order: i + 1,
+                    level: c.level
+                },
                 ...(c.children ? flatten(c.children, c.id) : [])
             ]);
 
-            $.post('{{ route("admin.categories.update-tree") }}', {
+            $.post('{{ route('admin.categories.update-tree') }}', {
                 _token: csrfToken,
-                categories: flatten(categoryData)
+                payload: flatten(categoryData)
             }).done(res => {
                 if (res.success) {
                     hasChanges = false;
@@ -626,7 +741,8 @@
                             id: cat.id,
                             html: `${'&nbsp;'.repeat(level * 4)} ${cat.title} <small class="text-muted">(L${cat.level})</small>`
                         });
-                        if (cat.children) res.push(...collect(cat.children, level + 1, path ? `${path} → ${cat.title}` : cat.title));
+                        if (cat.children) res.push(...collect(cat.children, level + 1, path ?
+                            `${path} → ${cat.title}` : cat.title));
                     }
                 });
                 return res;
@@ -634,7 +750,8 @@
 
             const options = collect(categoryData);
             const current = findCategoryById(categoryData, id);
-            const select = `<select id="parentSelect" class="form-control"><option value="">-- Root Level --</option>${options.map(o => `<option value="${o.id}">${o.html}</option>`).join('')}</select>`;
+            const select =
+                `<select id="parentSelect" class="form-control"><option value="">-- Root Level --</option>${options.map(o => `<option value="${o.id}">${o.html}</option>`).join('')}</select>`;
 
             Swal.fire({
                 title: `Move "${current.title}"`,
@@ -706,25 +823,46 @@
                     </div>
                 `,
                 preConfirm: () => {
-                    const title = $('#swal-input1').val(), slug = $('#swal-input2').val();
-                    if (!title || !slug) { Swal.showValidationMessage('Title & Slug required'); return false; }
-                    return { title, slug, status: $('#swal-input3').val(), is_featured: $('#swal-input4').is(':checked') };
+                    const title = $('#swal-input1').val(),
+                        slug = $('#swal-input2').val();
+                    if (!title || !slug) {
+                        Swal.showValidationMessage('Title & Slug required');
+                        return false;
+                    }
+                    return {
+                        title,
+                        slug,
+                        status: $('#swal-input3').val(),
+                        is_featured: $('#swal-input4').is(':checked')
+                    };
                 }
             }).then(r => {
                 if (!r.isConfirmed) return;
-                const { title, slug, status, is_featured } = r.value;
+                const {
+                    title,
+                    slug,
+                    status,
+                    is_featured
+                } = r.value;
 
-                $.post('/admin/categories', {
-                    _token: csrfToken, title, slug, status, is_featured: is_featured ? 1 : 0, parent_id: parentId || null
+                $.post('/admin/categories/create-from-sort', {
+                    _token: csrfToken,
+                    title,
+                    slug,
+                    status,
+                    is_featured: is_featured ? 1 : 0,
+                    parent_id: parentId || null
                 }).done(res => {
                     if (res.success) {
                         const cat = res.data;
-                        cat.children = []; cat.children_count = 0;
+                        cat.children = [];
+                        cat.children_count = 0;
                         cat.level = parentId ? (findCategoryById(categoryData, parentId).level + 1) : 0;
 
                         if (parentId) {
                             const p = findCategoryById(categoryData, parentId);
-                            p.children.push(cat); p.children_count++;
+                            p.children.push(cat);
+                            p.children_count++;
                         } else {
                             categoryData.push(cat);
                         }
@@ -754,7 +892,8 @@
 
             Swal.fire({
                 title: 'Delete?',
-                text: cat.children?.length ? `Delete "${cat.title}" and ${cat.children_count} subcategories?` : `Delete "${cat.title}"?`,
+                text: cat.children?.length ? `Delete "${cat.title}" and ${cat.children_count} subcategories?` :
+                    `Delete "${cat.title}"?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete!'
@@ -762,12 +901,19 @@
                 if (!r.isConfirmed) return;
 
                 $.ajax({
-                    url: `/admin/categories/${id}`, method: 'DELETE', data: { _token: csrfToken }
+                    url: `/admin/categories/${id}`,
+                    method: 'DELETE',
+                    data: {
+                        _token: csrfToken
+                    }
                 }).done(res => {
                     if (res.success) {
                         const remove = cats => {
                             for (let i = 0; i < cats.length; i++) {
-                                if (cats[i].id === id) { cats.splice(i, 1); return true; }
+                                if (cats[i].id === id) {
+                                    cats.splice(i, 1);
+                                    return true;
+                                }
                                 if (cats[i].children && remove(cats[i].children)) {
                                     cats[i].children_count = cats[i].children.length;
                                     return true;
@@ -799,7 +945,11 @@
         }
 
         $(document).ready(function() {
-            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': csrfToken } });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
             initializePage();
 
             $('#saveChangesBtn').on('click', saveChanges);
@@ -807,7 +957,7 @@
             $('#collapseAllBtn').on('click', collapseAll);
 
             window.addEventListener('beforeunload', e => {
-                if (hasChanges) (e || window.event).returnValue = 'Unsaved changes!';
+                if (hasChanges)(e || window.event).returnValue = 'Unsaved changes!';
             });
         });
     </script>

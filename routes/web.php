@@ -9,3 +9,8 @@ Route::get('/', function () {
 Route::post('/admin/categories/update-tree', [SortCategories::class, 'updateTree'])
     ->name('admin.categories.update-tree')
     ->middleware('auth'); 
+
+Route::post('/admin/categories/create-from-sort', [SortCategories::class, 'storeSubCat'])
+    ->name('admin.categories.create-from-sort')
+    ->middleware('auth');
+

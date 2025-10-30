@@ -29,7 +29,7 @@ class Category extends Model
         'code_generated_at',
     ];
 
-      protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -45,18 +45,23 @@ class Category extends Model
             }
         });
     }
+    public function filters()
+    {
+        return $this->belongsToMany(Filter::class, 'category_filter', 'category_id', 'filter_id')
+            ->withTimestamps();
+    }
     // Relationships
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-      public function brands()
+    public function brands()
     {
         return $this->belongsToMany(Brand::class, 'brand_category', 'category_id', 'brand_id')
             ->withTimestamps();
     }
-    
+
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id')->where('status', 'active');
@@ -101,9 +106,11 @@ class Category extends Model
     public static function getProductByCat($slug)
     {
         return self::where('slug', $slug)
-            ->with(['products' => function ($query) {
-                $query->where('status', 'active')->paginate(12); // Note: paginate inside with() won’t work as expected
-            }])
+            ->with([
+                'products' => function ($query) {
+                    $query->where('status', 'active')->paginate(12); // Note: paginate inside with() won’t work as expected
+                }
+            ])
             ->first();
     }
 

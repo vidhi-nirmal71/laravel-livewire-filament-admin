@@ -10,6 +10,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use App\Models\Category;
 use App\Models\Brand;
+use Filament\Forms\Components\CheckboxList;
 
 class CategoryForm
 {
@@ -67,6 +68,12 @@ class CategoryForm
                     ->searchable()
                     ->preload()
                     ->helperText('Select one or more brands to associate with this category.'),
+                CheckboxList::make('filters')
+                    ->label('Enabled Filters')
+                    ->relationship('filters', 'title')
+                    ->columns(2)
+                    ->helperText('Select which filters should be enabled for this category.')
+                    ->columnSpanFull(),
             ]);
     }
 }

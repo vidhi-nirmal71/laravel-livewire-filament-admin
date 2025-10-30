@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Filament\Notifications\Notification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SortCategories extends Page
 {
@@ -268,13 +269,17 @@ class SortCategories extends Page
 
         try {
             DB::transaction(function () use ($payload) {
-                // Rebuild tree using helper that expects nested nodes (id + children)
-                $this->rebuildFromNested($payload, null, 0);
-                // After rebuild, fix paths and children_count in one pass
+                $isNested = collect($payload)->first(fn($p) => is_array($p) && array_key_exists('children', $p));
+
+                if ($isNested) {
+                    $this->rebuildFromNested($payload, null, 0);
+                } else {
+                    $this->updateFromFlatPayload($payload);
+                }
+
                 $this->recalculateCountsAndPaths();
             });
 
-            // reload tree
             $this->loadTree();
 
             Notification::make()
@@ -294,6 +299,44 @@ class SortCategories extends Page
             return response()->json(['success' => false, 'message' => 'Failed to update category tree']);
         }
     }
+    protected function updateFromFlatPayload(array $nodes): void
+    {
+        foreach ($nodes as $node) {
+            $id = isset($node['id']) ? (int) $node['id'] : null;
+            if (!$id) {
+                continue;
+            }
+
+            $category = Category::find($id);
+            if (!$category) {
+                continue;
+            }
+
+            $parentId = $node['parent_id'] === null || $node['parent_id'] === '' ? null : (int) $node['parent_id'];
+
+            if ($parentId === $id) {
+                $parentId = null;
+            }
+
+            $level = isset($node['level']) ? (int) $node['level'] : ($parentId ? ($category->level ?? 0) : 0);
+            $sortOrder = isset($node['sort_order']) ? (int) $node['sort_order'] : 0;
+
+            $category->parent_id = $parentId;
+            $category->level = $level;
+            $category->sort_order = $sortOrder;
+            $category->saveQuietly();
+        }
+
+        $allIds = Category::pluck('id')->toArray();
+        Category::whereNotNull('parent_id')->get()->each(function ($cat) use ($allIds) {
+            if (!in_array($cat->parent_id, $allIds, true)) {
+                $cat->parent_id = null;
+                $cat->level = 0;
+                $cat->saveQuietly();
+            }
+        });
+    }
+
 
     /**
      * Recalculate path, children_count, has_children for all categories (fast single pass).
@@ -332,5 +375,37 @@ class SortCategories extends Page
             $path = count($pathParts) ? implode('/', $pathParts) : null;
             Category::where('id', $id)->update(['path' => $path]);
         }
+    }
+    public function storeSubCat(Request $request){
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:categories,slug',
+            'status' => ['required', Rule::in(['active','inactive'])],
+            'is_featured' => 'nullable|bool',
+            'parent_id' => 'nullable|integer|exists:categories,id',
+        ]);
+
+        $parentId = $data['parent_id'] ?? null;
+        $parentLevel = 0;
+        if ($parentId) {
+            $parent = Category::find($parentId);
+            $parentLevel = $parent ? $parent->level : 0;
+        }
+
+        $category = Category::create([
+            'title' => $data['title'],
+            'slug' => $data['slug'],
+            'status' => $data['status'],
+            'is_featured' => $data['is_featured'] ?? 0,
+            'parent_id' => $parentId,
+            'level' => $parentLevel + ($parentId ? 1 : 0),
+            'sort_order' => (Category::where('parent_id', $parentId)->max('sort_order') ?? 0) + 1,
+            'has_children' => 0,
+            'children_count' => 0,
+            'products_count' => 0,
+        ]);
+
+        return response()->json(['success' => true, 'data' => $category]);
+    
     }
 }
