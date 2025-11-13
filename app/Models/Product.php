@@ -18,6 +18,7 @@ class Product extends Model
         'size',
         'condition',
         'status',
+        'image',
         'price',
         'discount',
         // 'is_featured',

@@ -28,19 +28,31 @@ class ProductForm
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
 
+                // Category select: reactive so we can control child visibility/options
                 Select::make('cat_id')
                     ->label('Category')
                     ->options(fn () => Category::whereNull('parent_id')->pluck('title', 'id')->toArray())
                     ->searchable()
                     ->preload()
-                    ->nullable(),
+                    ->nullable()
+                    ->reactive() // important: allows dependent behavior
+                    ->afterStateUpdated(function (callable $set) {
+                        // clear child category when category changes
+                        $set('child_cat_id', null);
+                    }),
 
+                // Sub category: only shows when a category is selected AND that category has children
                 Select::make('child_cat_id')
                     ->label('Sub Category')
-                    ->options(fn () => Category::whereNotNull('parent_id')->pluck('title', 'id')->toArray())
+                    ->options(fn (callable $get) => $get('cat_id')
+                        ? Category::where('parent_id', $get('cat_id'))->pluck('title', 'id')->toArray()
+                        : [])
                     ->searchable()
                     ->preload()
-                    ->nullable(),
+                    ->nullable()
+                    ->hidden(fn (callable $get) => ! $get('cat_id') 
+                        || Category::where('parent_id', $get('cat_id'))->count() === 0)
+                    ->reactive(),
 
                 Select::make('brand_id')
                     ->label('Brand')

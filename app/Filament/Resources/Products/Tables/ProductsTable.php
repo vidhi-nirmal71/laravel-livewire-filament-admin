@@ -9,6 +9,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteBulkAction;
+use Illuminate\Support\Str;
 
 class ProductsTable
 {
@@ -28,13 +29,11 @@ class ProductsTable
                     ->getStateUsing(fn ($record) => $record->category_path ?? '-')
                     ->searchable()
                     ->wrap(),
-   
-                    
-                // Is featured (Yes/No)
-               TextColumn::make('is_active')
-                ->label('Featured')
-                ->getStateUsing(fn ($r) => $r && $r->is_active ? 'Yes' : 'No'),
 
+                // Is featured (Yes/No)
+                TextColumn::make('is_active')
+                    ->label('Featured')
+                    ->getStateUsing(fn ($r) => $r && $r->is_active ? 'Yes' : 'No'),
 
                 // Price (formatted like screenshot)
                 TextColumn::make('price')
@@ -70,10 +69,35 @@ class ProductsTable
                     ->html()
                     ->sortable(),
 
-                // Photo
+                // Photo — fixed to handle 'storage/p1/...' DB values
                 ImageColumn::make('image')
                     ->label('Photo')
-                    ->disk('public')
+                    ->getStateUsing(function ($record) {
+                        // if null
+                        $img = $record->image ?? null;
+                        if (! $img) {
+                            return null;
+                        }
+
+                        // full URL already (http/https)
+                        if (Str::startsWith($img, ['http://', 'https://'])) {
+                            return $img;
+                        }
+
+                        // stored as 'storage/p1/...' (public path) -> strip 'storage/' and use public disk
+                        if (Str::startsWith($img, 'storage/')) {
+                            return Str::after($img, 'storage/'); // returns 'p1/download (76).png'
+                        }
+
+                        // stored as 'public/p1/...' -> strip 'public/' if present
+                        if (Str::startsWith($img, 'public/')) {
+                            return Str::after($img, 'public/');
+                        }
+
+                        // otherwise assume it's already relative to the public disk
+                        return $img;
+                    })
+                    ->disk('public') // ensures files are read from storage/app/public (symlinked to public/storage)
                     ->width(60)
                     ->height(60)
                     ->rounded(),
