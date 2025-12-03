@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Filament\Facades\Filament::registerNavigationGroups([]);
+
         Schema::defaultStringLength(191);
     }
 }

@@ -10,6 +10,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pbQ6Yf2QZzgr5b0zqz1r9oBRtnf4q9t8f5d6g7p9mK6yVqD4K2kq6YfW7gq6M7Ya9u1xNQw0z8K0QwXQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))

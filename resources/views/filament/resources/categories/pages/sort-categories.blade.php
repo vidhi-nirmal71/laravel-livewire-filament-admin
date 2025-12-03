@@ -410,6 +410,59 @@
             color: var(--color-white) !important;
             border: 1px solid var(--gray-800) !important;
         }
+/* Strong SweetAlert2 success-icon restore for Filament dark mode */
+.fi-body.dark .swal2-container .swal2-icon.swal2-success,
+.fi-body:where(.dark, .dark *) .swal2-container .swal2-icon.swal2-success {
+  width: 96px !important;
+  height: 96px !important;
+  background: transparent !important;
+  border: 0 !important;
+  position: relative !important;
+  color: inherit !important;
+  z-index: 99999 !important;
+}
+
+/* ring (outer circle) */
+.fi-body.dark .swal2-container .swal2-icon.swal2-success .swal2-success-ring,
+.fi-body:where(.dark, .dark *) .swal2-container .swal2-icon.swal2-success .swal2-success-ring {
+  display: block !important;
+  width: 96px !important;
+  height: 96px !important;
+  border-radius: 50% !important;
+  border: 4px solid #a5dc86 !important;   /* green ring */
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-transform-origin: center !important;
+  transform-origin: center !important;
+}
+
+/* the two check lines */
+.fi-body.dark .swal2-container .swal2-icon.swal2-success .swal2-success-line-tip,
+.fi-body.dark .swal2-container .swal2-icon.swal2-success .swal2-success-line-long,
+.fi-body:where(.dark, .dark *) .swal2-container .swal2-icon.swal2-success .swal2-success-line-tip,
+.fi-body:where(.dark, .dark *) .swal2-container .swal2-icon.swal2-success .swal2-success-line-long {
+  display: block !important;
+  background-color: #a5dc86 !important; /* make lines visible */
+  box-shadow: none !important;
+}
+
+/* Ensure SVG inside is visible and not filled by theme color */
+.fi-body.dark .swal2-container .swal2-icon.swal2-success svg,
+.fi-body:where(.dark, .dark *) .swal2-container .swal2-icon.swal2-success svg {
+  display: block !important;
+  fill: none !important;
+  stroke: #a5dc86 !important;
+  stroke-width: 4px !important;
+}
+
+/* Also ensure popup background remains dark but icon keeps its colors */
+.fi-body.dark .swal2-popup,
+.fi-body:where(.dark, .dark *) .swal2-popup {
+  background-color: var(--gray-950) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--gray-800) !important;
+}
+
     </style>
 
     <script>
@@ -576,12 +629,23 @@
             });
         }
 
-        function initializeRootDropZone() {
+       function initializeRootDropZone() {
             const rootZone = document.getElementById('rootDropZone');
+
+            // destroy any previous instance for safety (we already call destroyAllSortables earlier)
             const rootSortable = new Sortable(rootZone, {
                 group: 'nested-categories',
                 animation: 200,
-                onAdd: () => {
+                fallbackOnBody: true,
+                swapThreshold: 0.65,
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-chosen',
+                dragClass: 'sortable-drag',
+                onAdd: function (evt) {
+                    $('#categoryTree').append(evt.item);
+                    evt.item.dataset.level = '0';
+                    $(evt.item).find('.children-container').each(function() {
+                    });
                     hasChanges = true;
                     const expanded = getExpandedIds();
                     updateCategoryDataFromDOM();
@@ -591,6 +655,11 @@
                     initializeTooltips();
                     updateStats();
                     showSaveButton();
+                },
+                onMove: evt => {
+                    const draggedId = parseInt(evt.dragged.dataset.id);
+                    const targetParentId = evt.to && evt.to.dataset.parent ? parseInt(evt.to.dataset.parent) : null;
+                    return !targetParentId || !isDescendantOf(targetParentId, draggedId);
                 }
             });
             sortableInstances.push(rootSortable);
